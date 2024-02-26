@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+
+# Caches and logs
+*.log
+logs/
+*.sqlite3
+
+# Static files
+/staticfiles/
+
+# Media files
+/media/
+
+# Virtual environment
+.venv/
+venv/
+env/
+ENV/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment variables
+.env
+
+# Database
+db.sqlite3
+
+# Compiled Python files
+__pycache__/
+*.pyc
+
+# Local settings
+local_settings.py
+
+# Mac OS
+.DS_Store
+
+# Other system files
+Thumbs.db
