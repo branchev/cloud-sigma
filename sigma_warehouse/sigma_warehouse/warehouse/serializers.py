@@ -7,4 +7,9 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = "__all__"
+        fields = ['pk', 'quantity']
+
+    def validate_quantity(self, *kwargs):
+        value, *_ = kwargs
+        if value > self.instance.quantity:
+            raise serializers.ValidationError("Insufficient quantity")

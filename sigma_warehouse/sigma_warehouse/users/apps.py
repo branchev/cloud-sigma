@@ -7,5 +7,4 @@ class UsersConfig(AppConfig):
 
     def ready(self) -> None:
         import sigma_warehouse.users.signals
-        print('fdsafdsafdsafdsa')
         return super().ready()

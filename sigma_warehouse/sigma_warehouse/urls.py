@@ -34,6 +34,8 @@ urlpatterns = [
     # API endpoints documentation
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
+    # API urls
     path('api-token-auth/', CustomAuthToken.as_view()),
     path('api/', include(router.urls)),
+    path('api/buy-tem/', WarehouseViewSet.as_view({'put': 'buy_item'}), name='buy-item'),
 ]
