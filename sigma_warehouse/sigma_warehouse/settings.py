@@ -92,9 +92,9 @@ DATABASES = {
         'USER': os.getenv('DB_USERNAME'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'NAME': os.getenv('DB_NAME'),
-        'HOST': 'db_sigma_warehouse',
+        # 'HOST': 'warehouse_db',
         'HOST': 'localhost',
-        # 'PORT': '5432',
+        'PORT': '5432',
     },
 }
 
@@ -140,3 +140,30 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "users.User"
+
+# Celery
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", default="redis://127.0.0.1:6379/1")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", default="redis://127.0.0.1:6379/1")
+
+CELERY_TIME_ZONE = "Europe/Sofia"
+
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',  # Set the desired log level
+        },
+    },
+}
