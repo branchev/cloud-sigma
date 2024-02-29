@@ -1,5 +1,0 @@
-setup.py
-sigma_endpoints.egg-info/PKG-INFO
-sigma_endpoints.egg-info/SOURCES.txt
-sigma_endpoints.egg-info/dependency_links.txt
-sigma_endpoints.egg-info/top_level.txt
