@@ -4,9 +4,11 @@ from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.views.generic import FormView, TemplateView
 from django.urls import reverse_lazy
 
+from sigma_routers.routers import SigmaEndpoints
+
 from sigma_accounting.accounting.forms import LoginForm
 from sigma_accounting.accounting.utils import encrypt_cookie, decrypt_cookie
-from sigma_accounting.accounting.warehouse_endpoints import SignaEndpoints
+from sigma_accounting.settings import WAREHOUSE_URL
 
 
 class LoginFormView(FormView):
@@ -14,12 +16,14 @@ class LoginFormView(FormView):
     template_name = 'login.html'
     success_url = reverse_lazy('accounting:items')
 
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:    
+        return super().post(request, *args, **kwargs)
+
     def form_valid(self, form: Any) -> HttpResponse:
         response = HttpResponse(self.success_url)
         response.set_cookie(
             'token', encrypt_cookie({'sigma_user_token': form.token})
         )
-
         return response
 
 
@@ -35,7 +39,7 @@ class ItemsView(TemplateView):
 
         token = decrypted_value['sigma_user_token']
 
-        endpoints = SignaEndpoints()
+        endpoints = SigmaEndpoints(warehouse_url=WAREHOUSE_URL)
         response = endpoints.get_items(token)
 
         if response.status_code != 200:

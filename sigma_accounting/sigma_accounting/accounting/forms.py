@@ -1,6 +1,9 @@
+import os
+
 from django import forms
 
-from sigma_accounting.accounting.warehouse_endpoints import SignaEndpoints
+from sigma_routers.routers import SigmaEndpoints
+from sigma_accounting.settings import WAREHOUSE_URL
 
 
 class LoginForm(forms.Form):
@@ -13,7 +16,7 @@ class LoginForm(forms.Form):
 
     def clean(self):
         cleaned_data = super().clean()
-        endpoint = SignaEndpoints()
+        endpoint = SigmaEndpoints(warehouse_url=WAREHOUSE_URL)
         endpoint_response = endpoint.login(
             email=cleaned_data['email'],
             password=cleaned_data['password']
