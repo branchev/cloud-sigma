@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Warehouse Django microservice
+  warehouse:
+    build:
+      context: sigma_warehouse
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./sigma_warehouse:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=sigma_warehouse.settings
+      - DB_USERNAME=${WAREHOUSE_DB_USER_NAME}
+      - DB_PASSWORD=${WAREHOUSE_DB_PASS}
+      - DB_NAME=${WAREHOUSE_DB_NAME}
+    depends_on:
+      - db
+    env_file:
+      - .env
+    container_name: sigma_warehouse
+
+  # PostgreSQL database for Warehouse
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=${WAREHOUSE_DB_NAME}
+      - POSTGRES_USER=${WAREHOUSE_DB_USER_NAME}
+      - POSTGRES_PASSWORD=${WAREHOUSE_DB_PASS}
+    ports:
+      - "5432:5432"
+    volumes:
+      - sigma_warehouse_db_data:/var/lib/postgresql/data
+    container_name: sigma_warehouse_db
+
+volumes:
+  sigma_warehouse_db_data:
